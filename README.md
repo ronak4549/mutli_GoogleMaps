@@ -1,315 +1,89 @@
-# 🗺️ Laravel Multi Google Maps
+# multi_googleMap
 
-A Laravel demo project that demonstrates how to integrate **Google Maps** and display **multiple locations with markers** on a single map. This project is useful for applications such as store locators, branch locations, hospitals, schools, restaurants, and logistics tracking.
+A small Laravel application demonstrating integration of multiple Google Maps instances (autocomplete + maps) in a single project.
 
----
+## Features
 
-## 📌 Features
+- Simple Google Maps + Places Autocomplete integration.
+- Example view: `resources/views/googleAutocomplete.blade.php`.
+- Laravel backend scaffolded for quick testing and extension.
 
-- 🗺️ Google Maps Integration
-- 📍 Display Multiple Markers
-- 📌 Dynamic Marker Loading from Database
-- 🔍 Zoom and Pan Controls
-- 📱 Responsive Map Design
-- ⚡ Fast Marker Rendering
-- 🗄️ MySQL Database Integration
-- 🧩 Easy Configuration and Customization
+## Prerequisites
 
----
-
-## 🛠️ Tech Stack
-
-- Laravel
 - PHP 8.x
-- MySQL
-- Google Maps JavaScript API
-- JavaScript
-- Bootstrap / Tailwind CSS
-
----
-
-## 📋 Requirements
-
-Before you begin, make sure you have the following installed:
-
-- PHP >= 8.2
 - Composer
-- MySQL
-- Node.js (Optional)
-- Git
+- Node.js and npm
+- A Google Maps JavaScript API key with Places API enabled
 
----
+## Installation
 
-# 🚀 Installation
-
-## 1. Clone the Repository
-
-```bash
-git clone https://github.com/ronak4549/mutli_GoogleMaps.git
-```
-
-```bash
-cd mutli_GoogleMaps
-```
-
----
-
-## 2. Install PHP Dependencies
+1. Clone the repository and install PHP dependencies:
 
 ```bash
 composer install
 ```
 
----
-
-## 3. Install Frontend Dependencies (Optional)
+2. Install frontend dependencies and build assets:
 
 ```bash
 npm install
+npm run dev
 ```
 
----
-
-## 4. Create Environment File
-
-Linux / Mac
+3. Copy the environment file and generate an app key:
 
 ```bash
 cp .env.example .env
-```
-
-Windows
-
-```bash
-copy .env.example .env
-```
-
----
-
-## 5. Generate Application Key
-
-```bash
 php artisan key:generate
 ```
 
----
-
-## 6. Configure Database
-
-Update your `.env` file with your database credentials.
-
-```env
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=multi_google_maps
-DB_USERNAME=root
-DB_PASSWORD=
-```
-
----
-
-## 7. Configure Google Maps API Key
-
-Open the `.env` file and add your Google Maps API key.
-
-```env
-GOOGLE_MAPS_API_KEY=YOUR_GOOGLE_MAPS_API_KEY
-```
-
-Example Blade file:
-
-```html
-<script
-src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}">
-</script>
-```
-
----
-
-## 8. Run Database Migration
+4. Configure database settings in `.env` and run migrations (if needed):
 
 ```bash
 php artisan migrate
 ```
 
----
+## Configuration (Google Maps)
 
-## 9. Start Laravel Server
+1. Add your API key to the `.env` file:
+
+```env
+GOOGLE_MAPS_API_KEY=YOUR_API_KEY_HERE
+```
+
+2. The example view `resources/views/googleAutocomplete.blade.php` loads the Google Maps script. If you need multiple maps on the same page, create additional containers and initialize each map with its own DOM element and configuration.
+
+Tips for multiple maps:
+
+- Use unique container IDs (e.g. `map1`, `map2`).
+- Initialize each map with its own `google.maps.Map` instance.
+- Share the same API key across instances; only one script include is required.
+
+## Usage
+
+1. Start the local development server:
 
 ```bash
 php artisan serve
 ```
 
-Visit the application:
+2. Open your browser at `http://127.0.0.1:8000` (or the address shown) and navigate to the route that renders `googleAutocomplete.blade.php`.
 
-```
-http://127.0.0.1:8000
-```
+## Development notes
 
----
+- The example autocomplete view uses Places Autocomplete to suggest locations and can be adapted to populate multiple maps.
+- To add another map to a page, duplicate the container element and call the map initialization function with the new element's ID.
 
-# 📍 Project Functionality
+## Troubleshooting
 
-This project demonstrates how to:
+- If maps do not load, check the browser console for Google Maps API errors (billing, key restrictions, or missing APIs).
+- Ensure the Places API is enabled for your API key in Google Cloud Console.
 
-- Display multiple locations on Google Maps.
-- Load latitude and longitude values from a MySQL database.
-- Place multiple markers dynamically.
-- Show location information using info windows.
-- Zoom the map to fit all markers.
-- Easily add or remove locations.
+## Next steps
 
----
+- Add examples for multiple independent map controls (different center/zoom per map).
+- Add tests for any backend logic that processes location data.
 
-# 🗄️ Example Database Structure
+## License
 
-| Column | Type |
-|---------|------|
-| id | bigint |
-| name | varchar |
-| latitude | decimal |
-| longitude | decimal |
-| created_at | timestamp |
-| updated_at | timestamp |
-
----
-
-# 📂 Project Structure
-
-```
-app/
-bootstrap/
-config/
-database/
-public/
-resources/
-routes/
-storage/
-tests/
-```
-
----
-
-# 🔧 Useful Artisan Commands
-
-Generate Application Key
-
-```bash
-php artisan key:generate
-```
-
-Run Migration
-
-```bash
-php artisan migrate
-```
-
-Rollback Migration
-
-```bash
-php artisan migrate:rollback
-```
-
-Clear Cache
-
-```bash
-php artisan optimize:clear
-```
-
-Start Laravel Server
-
-```bash
-php artisan serve
-```
-
----
-
-# 📸 Screenshots
-
-Add screenshots of your application here.
-
-Example:
-
-```
-screenshots/
-
-home.png
-multiple-markers.png
-info-window.png
-```
-
-```markdown
-## Multiple Google Maps Markers
-
-![Map](screenshots/multiple-markers.png)
-```
-
----
-
-# 📖 Example Workflow
-
-1. Add location details to the database.
-2. Retrieve latitude and longitude using Laravel.
-3. Pass location data to the view.
-4. Initialize Google Maps.
-5. Loop through all locations.
-6. Create a marker for each location.
-7. Display information when clicking a marker.
-
----
-
-# 🚀 Future Improvements
-
-- Current User Location
-- Marker Clustering
-- Distance Calculation
-- Route Navigation
-- Place Search
-- Geolocation
-- Nearby Places Search
-- Polygon and Circle Drawing
-- Custom Marker Icons
-- Heat Maps
-
----
-
-# 🤝 Contributing
-
-Contributions are welcome!
-
-1. Fork the repository.
-
-2. Create a new branch.
-
-```bash
-git checkout -b feature-name
-```
-
-3. Commit your changes.
-
-```bash
-git commit -m "Added new feature"
-```
-
-4. Push to GitHub.
-
-```bash
-git push origin feature-name
-```
-
-5. Open a Pull Request.
-
----
-
-# 👨‍💻 Author
-
-**Ronak Prajapati**
-
-GitHub: https://github.com/ronak4549
-
----
-
-# 📄 License
-
-This project is licensed under the MIT License.
+This project follows the same license as Laravel (MIT). See the repository license for details.
